@@ -9,7 +9,7 @@ class PlayersController < ApplicationController
   end
 
   def index
-    @players = Player.all.sort(rating: :desc)
+    @players = Player.all.order(rating: :desc)
   end
 
   def show
