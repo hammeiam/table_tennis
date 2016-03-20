@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom'
+import Leaderboard from './Leaderboard'
+import NewPlayer from './NewPlayer'
+import MatchWrapper from './MatchWrapper'
 
 class Player extends Component {
   constructor(props){
     super(props)
     this.state = {
-      players: [],
-      player_name: '',
-      player_desc: ''
+      players: {},
+      sortedPlayers: []
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.updateState = this.updateState.bind(this)
+    this.createGame = this.createGame.bind(this)
   }
 
   componentDidMount() {
@@ -20,62 +23,60 @@ class Player extends Component {
   updateState(){
     fetch('http://localhost:3000/players').then(players => {
       players.json().then(players => (players) ).then(players => {
-        this.setState({players})
+        const newSortedPlayers = []
+        const newPlayers = {}
+
+        players.forEach(player => {
+          newSortedPlayers.push(player.id)
+          newPlayers[player.id] = player
+        })
+        this.setState({
+          players: newPlayers,
+          sortedPlayers: newSortedPlayers
+        })
       })
     })
   }
 
-  createGame(winnerId, loserId ){
+  createGame(winnerId, loserId){
+    // TODO: handle ties
     fetch('http://localhost:3000/games', {
       method: 'post',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
       body: JSON.stringify({
-        winner_id: winnerId,
-        loser_id: loserId
+        game: {
+          winner_id: winnerId,
+          loser_id: loserId
+        }
       })
     }).then(t => this.updateState())
   }
 
-  onSubmit(e){
-    const name = this.state.player_name
-    const desc = this.state.player_desc
+  handleSubmit({name, desc}){
     fetch('http://localhost:3000/players', {
       method: 'post',
-      headers: {  
-        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
-      },
-      body: `name=${name}&description=${desc}`
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify({
+        player: {
+          name,
+          description: desc
+        }
+      })
+      // `name=${name}&description=${desc}`
     }).then(t => this.updateState())
-  }
-
-  handleChange(event) {
-    this.setState({[event.target.id]: event.target.value});
   }
 
   render(){
     return (
       <div>
-        <h1>Players</h1>
-        {this.state.players.map(player => {
-          const won = player.won_games.length
-          return (
-            <div className='player'>
-              <span>Name: {player.name}</span>
-              {' '}
-              <span>Won: {player.won_games.length}</span>
-              {' '}
-              <span>Lost: {player.lost_games.length}</span>
-            </div>
-            )
-          })
-        }
+        <Leaderboard {...this.state} />
         {' '}
-        <h1>New Player</h1>
-        <label htmlFor='player_name'>Name</label>
-        <input id='player_name' ref='player_name' value={this.state.player_name} onChange={this.handleChange} />
-
-        <label htmlFor='player_name'>Description</label>
-        <textarea id='player_desc' ref='player_desc' value={this.state.player_desc} onChange={this.handleChange} />
-        <button onClick={this.onSubmit}>Create!</button>
+        <MatchWrapper {...this.state} onSubmit={this.createGame}/>
+        <NewPlayer onSubmit={this.handleSubmit} />
       </div>
     )
   }
