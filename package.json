@@ -1,0 +1,48 @@
+{
+  "name": "TableTennis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bundle.js",
+  "scripts": {
+    "dev": "node node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --colors --open -d --port 3001 --hot --inline",
+    "build": "node node_modules/webpack/bin/webpack.js -p --optimize-dedupe",
+    "test": "mocha 'test/*.@(js|jsx)' -R spec --compilers jsx:babel-core/register,less:./test/null-compiler --require ./test/test_setup.js  --recursive"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-redux": "^4.4.0",
+    "redux": "^3.3.1"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  },
+  "devDependencies": {
+    "babel-core": "^6.5.2",
+    "babel-eslint": "^5.0.0",
+    "babel-loader": "^6.2.3",
+    "babel-polyfill": "^6.6.1",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.5.0",
+    "css-loader": "^0.23.1",
+    "eslint": "^2.2.0",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-loader": "^1.3.0",
+    "eslint-plugin-react": "^4.2.1",
+    "expect": "^1.14.0",
+    "jsdom": "^8.1.0",
+    "less": "^2.6.1",
+    "less-loader": "^2.2.2",
+    "mocha": "^2.4.5",
+    "react-addons-test-utils": "^0.14.7",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
