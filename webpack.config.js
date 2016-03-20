@@ -18,10 +18,6 @@ module.exports = {
         query: {compact: false}
       },
       {
-        test: /\.jsx?$/,
-        loader: 'eslint'
-      },
-      {
         test: /\.less$/,
         loader: 'style!css!less'
       }

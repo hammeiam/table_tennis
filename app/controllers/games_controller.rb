@@ -1,7 +1,9 @@
 class GamesController < ApplicationController
   def create
     @game = Game.new(game_params)
-    if(!@game.save)
+    if @game.save
+      render json: { success: 'game saved' }
+    else
       render json: { errors: @game.errors.full_messages }
     end
   end
