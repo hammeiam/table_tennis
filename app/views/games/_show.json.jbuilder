@@ -1,0 +1,1 @@
+json.(game, :id, :winner_id, :loser_id)
