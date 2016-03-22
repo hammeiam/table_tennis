@@ -17,7 +17,8 @@ render(
     <Router history={history}>
       <Route path='/' component={}>
         <IndexRoute component={Home}/>
-        <Route component={MatchContainer}
+        <Route path='/match' component={MatchContainer} />
+        <Route path='/player/:id' component={Player} />
       </Route>
     </Router>
   </Provider>,

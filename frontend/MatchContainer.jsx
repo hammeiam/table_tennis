@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Match from './Match'
 
-class MatchWrapper extends Component {
+class MatchContainer extends Component {
   constructor(props){
     super(props)
     this.state = {}
@@ -81,10 +81,10 @@ class MatchWrapper extends Component {
   }
 }
 
-MatchWrapper.propTypes = {
+MatchContainer.propTypes = {
   players: PropTypes.object.isRequired,
   sortedPlayers: PropTypes.array.isRequired,
   onSubmit: PropTypes.func.isRequired
 }
 
-export default MatchWrapper
+export default MatchContainer
