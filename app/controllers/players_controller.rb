@@ -9,7 +9,7 @@ class PlayersController < ApplicationController
   end
 
   def index
-    @players = Player.all.order(rating: :desc)
+    @players = Player.includes(:won_games,:lost_games).order(rating: :desc)
   end
 
   def show
