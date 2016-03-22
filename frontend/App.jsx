@@ -1,22 +1,35 @@
 import React, { Component, PropTypes } from 'react'
 import { Link, browserHistory } from 'react-router'
+import { getPlayers } from '../actions'
 
-const App = ({children}) => {
-  return (
-    <div>
-      <header>
-        <h1>PING PONG</h1>
-      </header>
+class App extends Component {
+  constructor(props){
+    super(props)
+  }
+  
+  componentDidMount(){
+    // fetch player data to kick things off
+    getPlayers()
+  }
 
-      <nav>
-        Some links
-      </nav>
+  render(){
+    const { children } = this.props
+    return (
+      <div>
+        <header>
+          <h1>PING PONG</h1>
+        </header>
 
-      <main>
-        {children}
-      </main>
-    </div>
-  )
+        <nav>
+          Some links
+        </nav>
+
+        <main>
+          {children}
+        </main>
+      </div>
+    )
+  }
 }
 
 App.propTypes = {

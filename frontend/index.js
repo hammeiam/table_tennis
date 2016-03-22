@@ -4,6 +4,9 @@ import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import configureStore from './configureStore'
+
+import App from './App'
+import Home from './Home'
 import Leaderboard from './Leaderboard'
 import NewPlayer from './NewPlayer'
 import MatchWrapper from './MatchWrapper'
@@ -15,7 +18,7 @@ const history = syncHistoryWithStore(browserHistory, store)
 render(
   <Provider store={store}>
     <Router history={history}>
-      <Route path='/' component={}>
+      <Route path='/' component={App}>
         <IndexRoute component={Home}/>
         <Route path='/match' component={MatchContainer} />
         <Route path='/player/:id' component={Player} />
