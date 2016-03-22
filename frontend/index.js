@@ -1,8 +1,28 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
+import configureStore from './configureStore'
 import Leaderboard from './Leaderboard'
 import NewPlayer from './NewPlayer'
 import MatchWrapper from './MatchWrapper'
+
+
+const store = configureStore()
+const history = syncHistoryWithStore(browserHistory, store)
+
+render(
+  <Provider store={store}>
+    <Router history={history}>
+      <Route path='/' component={}>
+        <IndexRoute component={Home}/>
+        <Route component={MatchContainer}
+      </Route>
+    </Router>
+  </Provider>,
+  document.getElementById('app')
+)
 
 class Player extends Component {
   constructor(props){
@@ -82,7 +102,3 @@ class Player extends Component {
   }
 }
 
-render(
-  <Player />,
-  document.getElementById('app')
-)

@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(game_params)
     if @game.save
-      render json: { success: 'game saved' }
+      redirect_to :controller => 'players', :action => 'index' 
     else
       render json: { errors: @game.errors.full_messages }
     end
