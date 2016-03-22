@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :leaderboard, only: [:show], :defaults => { :format => :json }
   resources :players, :defaults => { :format => :json }
   resources :games, :defaults => { :format => :json }
+  match '*all', to: 'static_pages#home', via: [:get]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

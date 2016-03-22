@@ -39,7 +39,7 @@ function receiveUpdatedPlayers(state = {}, action){
   )
 }
 
-function reducer(state = {}, action){
+function rootReducer(state = {}, action){
   switch(action.type){
     case POST_NEW_PLAYER:
       return Object.assign({}, state,
@@ -69,4 +69,4 @@ function reducer(state = {}, action){
   }
 }
 
-export default reducer
+export default rootReducer
