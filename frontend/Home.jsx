@@ -34,7 +34,8 @@ export class HomeView extends Component {
 }
 
 HomeView.propTypes = {
-  
+  playersData: PropTypes.object,
+  sortedPlayers: PropTypes.arrayOf(PropTypes.number).isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -46,17 +47,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fn(args) {
-      dispatch()
-    }
-  }
-}
-
 const Home = connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(HomeView)
 
 export default Home

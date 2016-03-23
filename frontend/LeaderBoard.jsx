@@ -6,7 +6,7 @@ const Leaderboard = ({playersData, sortedPlayers}) => {
   const headers = (
     <div className={'leaderboard-row header'}>
       <div className='cell'></div>
-      <div className='cell name'></div>
+      <div className='cell'></div>
       <div className='cell'>Rating</div>
       <div className='cell'>Won</div>
       <div className='cell'>Lost</div>
@@ -20,7 +20,7 @@ const Leaderboard = ({playersData, sortedPlayers}) => {
     return (
       <div className={`leaderboard-row ${rowClass}`} key={i}>
         <div className='cell'>{i + 1}.</div>
-        <div className='cell name'><Link to={`/players/${player.id}`}>{player.name}</Link></div>
+        <div className='cell'><Link to={`/players/${player.id}`}>{player.name}</Link></div>
         <div className='cell'>{player.rating}</div>
         <div className='cell'>{player.won_games.length}</div>
         <div className='cell'>{player.lost_games.length}</div>

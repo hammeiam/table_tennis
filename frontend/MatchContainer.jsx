@@ -1,61 +1,64 @@
 import React, { Component, PropTypes } from 'react'
+import { connect, bindActionCreators } from 'react-redux'
+import { selectMatchPlayer, createNewGame } from './actions'
 import Match from './Match'
 
-class MatchContainer extends Component {
+class MatchContainerView extends Component {
   constructor(props){
     super(props)
-    this.state = {}
-    this.selectPlayer1 = this.selectPlayer1.bind(this)
-    this.selectPlayer2 = this.selectPlayer2.bind(this)
+    this.selectFirstPlayer = this.selectFirstPlayer.bind(this)
+    this.selectSecondPlayer = this.selectSecondPlayer.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  selectPlayer1(e){
-    this.setState({
-      player1: this.props.players[e.target.value]
+  selectFirstPlayer(e){
+    this.props.handlePlayerSelection({
+      firstPlayerId: e.target.value
     })
   }
 
-  selectPlayer2(e){
-    this.setState({
-      player2: this.props.players[e.target.value]
+  selectSecondPlayer(e){
+    this.props.handlePlayerSelection({
+      secondPlayerId: e.target.value
     })
   }
 
   handleSubmit(winnerId, loserId){
     this.props.onSubmit(winnerId, loserId)
-    this.setState({
-      player1: undefined,
-      player2: undefined
-    })
   }
 
   render(){
-    if(this.state.player1 && this.state.player2){
-      return <Match 
-              player1={this.state.player1} 
-              player2={this.state.player2} 
-              onSubmit={this.handleSubmit} />
+    const { recordingGame, playersData, firstPlayerId, secondPlayerId, games } = this.props
+
+    if(firstPlayerId !== -1 && secondPlayerId !== -1){
+      return <div>got them players</div>
+      // return <Match 
+      //         firstPlayerId={this.state.firstPlayerId} 
+      //         secondPlayerId={this.state.secondPlayerId} 
+      //         onSubmit={this.handleSubmit} />
     } else {
       const selectOption = {
         id: -1,
         name: 'Select Player'
       }
-      const playerOptions = [selectOption].concat(this.props.sortedPlayers.map(playerId => {
-        return this.props.players[playerId]
-      }))
+      const playerOptions = [selectOption].concat(Object.keys(playersData)
+        .map(playerId => {
+          return playersData[playerId]
+        })
+      )
+
       return (
         <div>
           <h2>Choose Players</h2>
           <div>
             <select 
               id='selectPlayer1'
-              value={this.state.player1 ? this.state.player1.id : playerOptions[0]}
-              onChange={this.selectPlayer1}
+              value={firstPlayerId}
+              onChange={this.selectFirstPlayer}
               >
               {playerOptions.filter(player => {
-                if(!this.state.player2){ return true }
-                return player.id !== this.state.player2.id
+                if(firstPlayerId === -1){ return true }
+                return player.id !== secondPlayerId
               }).map(player => {
                 return <option key={player.id} value={player.id}>{player.name}</option>
               })}
@@ -64,12 +67,12 @@ class MatchContainer extends Component {
           <div>
             <select 
               id='selectPlayer1'
-              value={this.state.player2 ? this.state.player2.id : playerOptions[0]}
-              onChange={this.selectPlayer2}
+              value={secondPlayerId}
+              onChange={this.selectSecondPlayer}
               >
               {playerOptions.filter(player => {
-                if(!this.state.player1){ return true }
-                return player.id !== this.state.player1.id
+                if(secondPlayerId === -1){ return true }
+                return player.id !== firstPlayerId
               }).map(player => {
                 return <option key={player.id} value={player.id}>{player.name}</option>
               })}
@@ -81,10 +84,53 @@ class MatchContainer extends Component {
   }
 }
 
-MatchContainer.propTypes = {
-  players: PropTypes.object.isRequired,
-  sortedPlayers: PropTypes.array.isRequired,
-  onSubmit: PropTypes.func.isRequired
+MatchContainerView.propTypes = {
+  recordingGame: PropTypes.bool, 
+  playersData: PropTypes.object.isRequired, 
+  // firstPlayerId: PropTypes.string, 
+  // secondPlayerId: PropTypes.string,
+  games: PropTypes.array
 }
+
+function mapStateToProps(state){
+  const { rootReducer } = state
+  const { recordingGame, playersData, currentMatch } = rootReducer
+  const { firstPlayerId, secondPlayerId, games } = currentMatch
+  
+  return { 
+    recordingGame, 
+    playersData, 
+    firstPlayerId, 
+    secondPlayerId,
+    games 
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(Object.assign({}, selectMatchPlayer, createNewGame), dispatch)
+}
+
+function mergeProps(stateProps, dispatchProps, ownProps){
+  // incurs rendering penalty, since this will be called every time props changes
+  const { currentMatch } = stateProps
+  const { selectMatchPlayer, createNewGame } = dispatchProps
+  
+  return {
+    ...stateProps, // don't pass all state props down
+    ...ownProps,
+    handlePlayerSelection: (playerObj) => {
+      selectMatchPlayer(playerObj)
+    },
+    onSubmit: () => {
+      createNewGame(currentMatch)
+    }
+  }
+}
+
+const MatchContainer = connect(
+  mapStateToProps,
+  { selectMatchPlayer, createNewGame },
+  mergeProps
+)(MatchContainerView)
 
 export default MatchContainer

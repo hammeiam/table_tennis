@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import configureStore from './configureStore'
-import { getPlayers } from './actions'
+import { resetPlayerForm, resetCurrentMatch } from './actions'
 
 import App from './App'
 import Home from './Home'
@@ -17,9 +17,17 @@ const Routing = ({store, history}) => {
       <Router history={history}>
         <Route path='/' component={App}>
           <IndexRoute component={Home} />
-          <Route path='new_match' component={MatchContainer} />
+          <Route 
+            path='new_match' 
+            component={MatchContainer} 
+            onLeave={() => store.dispatch(resetCurrentMatch())}
+          />
           <Route path='players/:id' component={PlayerProfile} />
-          <Route path='new_player' component={NewPlayer} />
+          <Route 
+            path='new_player' 
+            component={NewPlayer} 
+            onLeave={() => store.dispatch(resetPlayerForm())}
+          />
           <Route path='*' component={PlayerProfile}/>
         </Route>
       </Router>

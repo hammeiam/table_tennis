@@ -1,9 +1,12 @@
 import { 
+  RESET_PLAYER_FORM,
   CHANGE_PLAYER_FORM,
   POST_NEW_PLAYER, 
   RECEIVE_NEW_PLAYER_CONFIRMATION,
   REQUEST_UPDATED_PLAYERS,
   RECEIVE_UPDATED_PLAYERS, 
+  RESET_CURRENT_MATCH,
+  SELECT_MATCH_PLAYER,
   POST_NEW_GAME,
   RECEIVE_NEW_GAME_CONFIRMATION
 } from '../actions'
@@ -16,7 +19,7 @@ import {
 //   playersData: obj
 //   sortedPlayers: arr
 
-//   match: {
+//   currentMatch: {
 //     player1: num
 //     player2: num
 //     games: arr
@@ -53,17 +56,35 @@ function receiveUpdatedPlayers(state = {}, action){
     }
   )
 }
+
+function selectMatchPlayer(state, action){
+  const newCurrentMatch = Object.assign({}, state.currentMatch, action.payload)
+  return Object.assign({}, state,
+    { 
+      currentMatch: newCurrentMatch
+    })
+}
 // TODO: clear old playerForm data
 const initialPlayerForm = {
   name: '',
   description: ''
 }
+const initialCurrentMatch = {
+  firstPlayerId: -1,
+  secondPlayerId: -1,
+  games: []
+}
 const initialState = {
   sortedPlayers: [],
-  playerForm: initialPlayerForm
+  playersData: {},
+  playerForm: initialPlayerForm,
+  currentMatch: initialCurrentMatch
 }
 function rootReducer(state = initialState, action){
   switch(action.type){
+    case RESET_PLAYER_FORM:
+      return Object.assign({}, state,
+        { playerForm: initialPlayerForm })
     case CHANGE_PLAYER_FORM:
       return changePlayerForm(state, action)
 
@@ -85,13 +106,23 @@ function rootReducer(state = initialState, action){
     case RECEIVE_UPDATED_PLAYERS:
       return receiveUpdatedPlayers(state, action)
 
+    case RESET_CURRENT_MATCH:
+      return Object.assign({}, state,
+        { currentMatch: initialCurrentMatch })
+
+    case SELECT_MATCH_PLAYER:
+      return selectMatchPlayer(state, action)
+
     case POST_NEW_GAME:
       return Object.assign({}, state,
         { recordingGame: true })
 
     case RECEIVE_NEW_GAME_CONFIRMATION:
       return Object.assign({}, state,
-        { recordingGame: false })
+        { 
+          recordingGame: false,
+          currentMatch: initialCurrentMatch
+        })
 
     default:
       return state

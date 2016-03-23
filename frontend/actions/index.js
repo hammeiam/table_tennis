@@ -4,12 +4,19 @@ import { push } from 'react-router-redux'
 /*
 *   PLAYERS
 */
+export const RESET_PLAYER_FORM = 'RESET_PLAYER_FORM'
 export const CHANGE_PLAYER_FORM = 'CHANGE_PLAYER_FORM'
 export const CREATE_PLAYER = 'CREATE_PLAYER'
 export const POST_NEW_PLAYER = 'POST_NEW_PLAYER'
 export const RECEIVE_NEW_PLAYER_CONFIRMATION = 'RECEIVE_NEW_PLAYER_CONFIRMATION'
 export const REQUEST_UPDATED_PLAYERS = 'REQUEST_UPDATED_PLAYERS'
 export const RECEIVE_UPDATED_PLAYERS = 'RECEIVE_UPDATED_PLAYERS'
+
+export function resetPlayerForm(){
+  return {
+    type: RESET_PLAYER_FORM
+  }
+}
 
 export function changePlayerForm(fieldObj){
   return {
@@ -82,10 +89,24 @@ export function createNewPlayer(player){
 /*
 *   GAMES
 */
+export const RESET_CURRENT_MATCH = 'RESET_CURRENT_MATCH'
+export const SELECT_MATCH_PLAYER = 'SELECT_MATCH_PLAYER'
 export const CREATE_GAME = 'CREATE_GAME'
 export const POST_NEW_GAME = 'POST_NEW_GAME'
 export const RECEIVE_NEW_GAME_CONFIRMATION = 'RECEIVE_NEW_GAME_CONFIRMATION'
 
+export function resetCurrentMatch(){
+  return {
+    type: RESET_CURRENT_MATCH
+  }
+}
+
+export function selectMatchPlayer(playerObj){
+  return {
+    type: SELECT_MATCH_PLAYER,
+    payload: playerObj
+  }
+}
 
 export function postNewGame(game){
   return {
@@ -101,6 +122,7 @@ export function receiveNewGameConfirmation(){
 }
 
 export function createNewGame(game){
+  // {winner_id: 1, loser_id: 2}
   return function(dispatch){
     dispatch(postNewGame(game))
 

@@ -1,6 +1,5 @@
 import thunkMiddleware from 'redux-thunk'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
-// import { routerReducer } from 'react-router-redux'
 import { browserHistory } from 'react-router'
 import rootReducer from './reducers'
 import { routerReducer,routerMiddleware, push } from 'react-router-redux'
