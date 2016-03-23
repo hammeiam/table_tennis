@@ -1,4 +1,5 @@
 import { 
+  CHANGE_PLAYER_FORM,
   POST_NEW_PLAYER, 
   RECEIVE_NEW_PLAYER_CONFIRMATION,
   REQUEST_UPDATED_PLAYERS,
@@ -18,8 +19,22 @@ import {
 //   match: {
 //     player1: num
 //     player2: num
+//     games: arr
+//   }
+
+//   playerForm: {
+//     name:
+//     description:
 //   }
 // }
+
+function changePlayerForm(state, action){
+  const newPlayerForm = Object.assign({}, state.playerForm, action.payload)
+  return Object.assign({}, state,
+    { 
+      playerForm: newPlayerForm
+    })
+}
 
 function receiveUpdatedPlayers(state = {}, action){
   const playersData = {}
@@ -38,16 +53,30 @@ function receiveUpdatedPlayers(state = {}, action){
     }
   )
 }
-
-function rootReducer(state = {}, action){
+// TODO: clear old playerForm data
+const initialPlayerForm = {
+  name: '',
+  description: ''
+}
+const initialState = {
+  sortedPlayers: [],
+  playerForm: initialPlayerForm
+}
+function rootReducer(state = initialState, action){
   switch(action.type){
+    case CHANGE_PLAYER_FORM:
+      return changePlayerForm(state, action)
+
     case POST_NEW_PLAYER:
       return Object.assign({}, state,
         { recordingPlayer: true })
 
     case RECEIVE_NEW_PLAYER_CONFIRMATION:
       return Object.assign({}, state,
-        { recordingPlayer: false })
+        { 
+          recordingPlayer: false,
+          playerForm: initialPlayerForm
+        })
 
     case REQUEST_UPDATED_PLAYERS:
       return Object.assign({}, state,

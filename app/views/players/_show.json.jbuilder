@@ -1,4 +1,4 @@
-json.(player, :id, :name, :description)
+json.(player, :id, :name, :description, :rating)
 json.won_games player.won_games do |game|
   json.(game, :id, :winner_id, :loser_id)
 end

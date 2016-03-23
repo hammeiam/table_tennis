@@ -1,0 +1,136 @@
+@text-color: #222;
+
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: @text-color;
+  font-size: 14px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+header {
+  h1 {
+
+  }
+}
+
+main {
+  display: flex;
+  flex-flow: row wrap;
+
+  section {
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+
+    .leaderboard {
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.2);
+
+      h2 {
+        margin: 20px 0 5px 20px;
+      }
+
+      .leaderboard-table{
+        display: flex;
+        flex-direction: column;
+      }
+
+      .leaderboard-row {
+        padding: 5px 0 5px 0;
+        display: flex;
+        flex-wrap: nowrap;
+        flex-flow: row;
+        justify-content: flex-end;
+
+        &.odd{
+          background-color: whitesmoke;
+        }
+
+        &.header {
+          font-size: 11px;
+          color: grey;
+          border-bottom: 1px solid lightgrey;
+        }
+        .cell {
+          display: flex;
+          flex-flow: row;
+          justify-content: center;
+          padding: 0 3px;
+          flex: 1 1 5%;          
+
+          &:nth-child(2){
+            flex: 1 1 40%;
+            justify-content: flex-start;
+            min-width: 0;
+            span, a {
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+            }
+          }
+        }
+      }
+    }
+
+    button {
+      margin-top: 15px;
+      height: 40px;
+      border-radius: 10px;
+      border: 2px solid cornflowerblue;
+      background-color: cornflowerblue;
+      color: white;
+      width: 100%;
+      outline: none;
+      cursor: pointer;
+      font-size: 16px;
+
+      &:hover {
+        background-color: darken(cornflowerblue, 5%)
+      }
+
+      &:active {
+        background-color: darken(cornflowerblue, 10%)
+      }
+
+      &:nth-child(1){
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+@media (min-width: 600px) {
+  main {
+    flex-flow: row;
+    section {
+      width: 50%;
+      button {
+        width: 300px;
+      }
+    }
+  }
+}
+
+// @media (min-width: 800px) {
+
+// }
+
+@media (min-width: 800px) {
+  .container {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

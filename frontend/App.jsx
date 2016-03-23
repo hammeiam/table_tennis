@@ -1,18 +1,22 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Link, browserHistory } from 'react-router'
+import './app.less'
 
-const App = ({ children }) => {
+// const App = ({ children }) => {
+class App extends Component{
+  constructor(props){super(props)}
+  render(){
+    const { children } = this.props
   return (
-    <div>
+    <div className='container'>
       <header>
-        <h1>PING PONG</h1>
+        <h1>PING PONGS</h1>
       </header>
 
-      <main>
-        {children}
-      </main>
+      {children}
     </div>
   )
+}
 }
 
 App.propTypes = {

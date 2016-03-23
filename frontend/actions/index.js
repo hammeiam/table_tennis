@@ -1,13 +1,22 @@
 // TODO: handle errors
+import { push } from 'react-router-redux'
 
 /*
 *   PLAYERS
 */
+export const CHANGE_PLAYER_FORM = 'CHANGE_PLAYER_FORM'
 export const CREATE_PLAYER = 'CREATE_PLAYER'
 export const POST_NEW_PLAYER = 'POST_NEW_PLAYER'
 export const RECEIVE_NEW_PLAYER_CONFIRMATION = 'RECEIVE_NEW_PLAYER_CONFIRMATION'
 export const REQUEST_UPDATED_PLAYERS = 'REQUEST_UPDATED_PLAYERS'
 export const RECEIVE_UPDATED_PLAYERS = 'RECEIVE_UPDATED_PLAYERS'
+
+export function changePlayerForm(fieldObj){
+  return {
+    type: CHANGE_PLAYER_FORM,
+    payload: fieldObj
+  }
+}
 
 export function postNewPlayer(player){
   return {
@@ -37,6 +46,7 @@ export function receiveUpdatedPlayers(players){
 }
 
 export function getPlayers(){
+  console.log('getting players')
   return function(dispatch){
     dispatch(requestUpdatedPlayers())
 
@@ -47,6 +57,7 @@ export function getPlayers(){
 }
 
 export function createNewPlayer(player){
+  // TODO: error handling
   return function(dispatch){
     dispatch(postNewPlayer(player))
 
@@ -63,6 +74,7 @@ export function createNewPlayer(player){
     .then(updatedPlayers => {
       dispatch(receiveUpdatedPlayers(updatedPlayers))
       dispatch(receiveNewPlayerConfirmation())
+      dispatch(push('/'))
     })
   }
 }

@@ -1,58 +1,91 @@
 import React, { Component, PropTypes } from 'react'
-
-class NewPlayer extends Component {
+import { connect, bindActionCreators } from 'react-redux'
+import { Link, browserHistory } from 'react-router'
+import { createNewPlayer, changePlayerForm } from './actions'
+console.log(createNewPlayer)
+class NewPlayerView extends Component {
   constructor(props){
     super(props)
-    this.state = {
-      player_name: '',
-      player_desc: ''
-    }
-    this.handleChange = this.handleChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
+    this.handleNameChange = this.handleNameChange.bind(this)
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
   }
 
-  handleChange(event) {
-    this.setState({[event.target.id]: event.target.value});
+  handleNameChange(event) {
+    this.props.handleChange({
+      name: event.target.value
+    });
   }
 
-  onSubmit(event){
-    const name = this.state.player_name
-    const desc = this.state.player_desc
-    this.props.onSubmit({
-      name,
-      desc
-    })
-    this.setState({
-      player_name: '',
-      player_desc: ''
-    })
+  handleDescriptionChange(event) {
+    this.props.handleChange({
+      description: event.target.value
+    });
   }
 
   render(){
+    const { playerForm, recordingPlayer, onSubmit } = this.props
+    const { name, description} = playerForm
     return (
       <div className='newPlayer'>
         <h2>New Player</h2>
+        {recordingPlayer &&
+          'Loading...'}
         <label htmlFor='player_name'>Name</label>
         <input 
           id='player_name' 
-          ref='player_name' 
-          value={this.state.player_name} 
-          onChange={this.handleChange} />
+          value={name} 
+          onChange={this.handleNameChange} />
 
         <label htmlFor='player_name'>Description</label>
         <textarea 
           id='player_desc' 
-          ref='player_desc' 
-          value={this.state.player_desc} 
-          onChange={this.handleChange} />
-        <button onClick={this.onSubmit}>Create!</button>
+          value={description} 
+          onChange={this.handleDescriptionChange} />
+        <button onClick={onSubmit}>Create!</button>
       </div>
     )
   }
 } 
   
-NewPlayer.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+NewPlayerView.propTypes = {
 }
+
+function mapStateToProps(state){
+  const { rootReducer } = state
+  const { recordingPlayer, playerForm } = rootReducer
+
+  return {
+    recordingPlayer,
+    playerForm
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(Object.assign({}, createNewPlayer, changePlayerForm), dispatch)
+}
+
+function mergeProps(stateProps, dispatchProps, ownProps){
+  // incurs rendering penalty, since this will be called every time props changes
+  const { playerForm } = stateProps
+  const { createNewPlayer, changePlayerForm } = dispatchProps
+  
+  return {
+    ...stateProps, // don't pass all state props down
+    ...ownProps,
+    handleChange: (fieldObj) => {
+      changePlayerForm(fieldObj)
+    },
+    onSubmit: () => {
+      // TODO: client side error handling
+      createNewPlayer(playerForm)
+    }
+  }
+}
+
+const NewPlayer = connect(
+  mapStateToProps,
+  { createNewPlayer, changePlayerForm },
+  mergeProps
+)(NewPlayerView)
 
 export default NewPlayer
