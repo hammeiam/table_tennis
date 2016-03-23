@@ -50,7 +50,7 @@ export function getPlayers(){
   return function(dispatch){
     dispatch(requestUpdatedPlayers())
 
-    return fetch('/players')
+    return fetch('/api/players')
       .then(resp => resp.json())
       .then(updatedPlayers => dispatch(receiveUpdatedPlayers(updatedPlayers)))
   }
@@ -61,7 +61,7 @@ export function createNewPlayer(player){
   return function(dispatch){
     dispatch(postNewPlayer(player))
 
-    return fetch('/players', {
+    return fetch('/api/players', {
       method: 'post',
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -104,7 +104,7 @@ export function createNewGame(game){
   return function(dispatch){
     dispatch(postNewGame(game))
 
-    return fetch('/games', {
+    return fetch('/api/games', {
       method: 'post',
       headers: new Headers({
         'Content-Type': 'application/json'

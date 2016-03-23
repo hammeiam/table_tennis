@@ -1,4 +1,4 @@
-class PlayersController < ApplicationController
+class Api::PlayersController < ApplicationController
   def create
     @player = Player.new(player_params)
     if @player.save

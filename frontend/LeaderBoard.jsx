@@ -20,7 +20,7 @@ const Leaderboard = ({playersData, sortedPlayers}) => {
     return (
       <div className={`leaderboard-row ${rowClass}`} key={i}>
         <div className='cell'>{i + 1}.</div>
-        <div className='cell name'><Link to={`/${player.name}`}>{player.name}</Link></div>
+        <div className='cell name'><Link to={`/players/${player.id}`}>{player.name}</Link></div>
         <div className='cell'>{player.rating}</div>
         <div className='cell'>{player.won_games.length}</div>
         <div className='cell'>{player.lost_games.length}</div>

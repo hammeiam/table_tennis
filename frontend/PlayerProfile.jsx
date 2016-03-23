@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 
-const PlayerProfile = () => {
-  return (<div>Dummy guy dude</div>)
+const PlayerProfile = ({ params }) => {
+
+  return (<div>Welcome to {params.id}</div>)
 }
 
 export default PlayerProfile
