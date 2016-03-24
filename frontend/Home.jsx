@@ -12,21 +12,25 @@ export class HomeView extends Component {
     const { playersData, sortedPlayers } = this.props
 
     return (
-      <main>
-        <section>
+      <main className='row'>
+        <section className='col-50'>
           <Leaderboard playersData={playersData} sortedPlayers={sortedPlayers} />
         </section>
-        <section>
-          <button 
-            className=''
-            onClick={() => browserHistory.push('/new_match')}>
-            New Match
-          </button>
-          <button 
-            className=''
-            onClick={() => browserHistory.push('/new_player')}>
-            New Player
-          </button>
+        <section className='col-50'>
+          <div className='even-space lg'>
+            <button 
+              className=''
+              onClick={() => browserHistory.push('/new_match')}>
+              New Match
+            </button>
+          </div>
+          <div className='even-space lg'>
+            <button 
+              className=''
+              onClick={() => browserHistory.push('/new_player')}>
+              New Player
+            </button>
+          </div>
         </section>
       </main>
     )

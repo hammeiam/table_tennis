@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { Link, browserHistory } from 'react-router'
 import './app.less'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+
 
 // const App = ({ children }) => {
 class App extends Component{
@@ -10,9 +12,8 @@ class App extends Component{
   return (
     <div className='container'>
       <header>
-        <h1>PING PONGS</h1>
+        <h1>elo governor</h1>
       </header>
-
       {children}
     </div>
   )
@@ -27,3 +28,13 @@ App.propTypes = {
 }
 
 export default App
+// <ReactCSSTransitionGroup
+//   component="div"
+//   transitionName="example"
+//   transitionEnterTimeout={500}
+//   transitionLeaveTimeout={500}
+// >
+//   {React.cloneElement(this.props.children, {
+//     key: this.props.location.pathname
+//   })}
+// </ReactCSSTransitionGroup>

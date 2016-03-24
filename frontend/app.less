@@ -1,4 +1,5 @@
 @text-color: #222;
+@theme-color: cornflowerblue;
 
 html, body {
   margin: 0;
@@ -13,10 +14,57 @@ body {
 }
 
 a {
-  text-decoration: none;
+  white-space: nowrap;
+  color: @text-color;
   &:hover {
     text-decoration: underline;
   }
+}
+
+button {
+  // margin-top: 15px;
+  height: 40px;
+  border-radius: 6px;
+  border: 2px solid @theme-color;
+  background-color: @theme-color;
+  color: white;
+  width: 100%;
+  max-width: 300px;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+
+  &:hover {
+    background-color: darken(@theme-color, 5%)
+  }
+
+  &:active {
+    background-color: darken(@theme-color, 10%)
+  }
+
+  &:nth-child(1){
+    margin-top: 0;
+  }
+}
+
+select {
+  padding: 10px 5px;
+  flex: 0 0 100%;
+  max-width: 400px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  
+  color: @text-color;
+  border: none;
+  border-radius: 0px;
+  border-bottom: 1px solid lightgrey;
+  background-color: transparent;
+  background-image: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 header {
@@ -24,17 +72,98 @@ header {
     margin: 20px 0 15px 20px;
     font-weight: 300;
     font-size: 36px;
-    color: cornflowerblue;
+    color: @theme-color;
     font-family: Tahoma, Geneva, sans-serif;
   }
+}
+
+.even-space {
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+
+  &.sm {
+    flex: 1 1 1%;
+    order: 1;
+  }
+
+  &.lg {
+    flex: 1 1 50%;
+    order: -1;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: stretch;
+    padding: 10px 5px;
+
+    label {
+      display: none;
+    }
+
+    input[type=text], textarea {
+      padding: 3px 5px;
+      flex: 0 0 100%;
+      max-width: 400px;
+      font-size: 13px;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid lightgrey;
+      color: @text-color;
+
+      &:focus {
+        border-bottom: 1px solid @theme-color;
+        transition: border-bottom .3s ease-in;
+      }
+    }
+
+    a {
+      text-decoration: underline;
+    }
+
+    button {
+      max-width: 400px;
+    }
+
+    input[type=text] {
+      
+    }
+
+    textarea {
+      resize: vertical;
+    }
+  }
+}
+
+.col-10, .col-20, .col-30, .col-40, .col-50, .col-100 {
+  flex: 0 1 100%;
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 main {
   display: flex;
   flex-flow: row wrap;
+  justify-content: space-around;
 
   section {
-    width: 100%;
+    flex: 0 1 100%;
     padding: 10px 20px;
     display: flex;
     flex-direction: column;
@@ -85,45 +214,82 @@ main {
               overflow: hidden;
             }
           }
+
+          a {
+            text-decoration: none;
+          }
         }
-      }
-    }
-
-    button {
-      margin-top: 15px;
-      height: 40px;
-      border-radius: 10px;
-      border: 2px solid cornflowerblue;
-      background-color: cornflowerblue;
-      color: white;
-      width: 100%;
-      outline: none;
-      cursor: pointer;
-      font-size: 16px;
-
-      &:hover {
-        background-color: darken(cornflowerblue, 5%)
-      }
-
-      &:active {
-        background-color: darken(cornflowerblue, 10%)
-      }
-
-      &:nth-child(1){
-        margin-top: 0;
       }
     }
   }
 }
 
+// .example-enter {
+//   // opacity: 0.01;
+//   transform: translate(-100%, 0%);
+//   // transition: opacity .5s ease-in;
+//   transition: transform .5s ease-in;
+//   // transition-delay: .6s;
+// }
+
+// .example-enter.example-enter-active {
+//   // opacity: 1;
+//   transform: translate(0%, 0%);
+// }
+
+// .example-leave {
+//   // opacity: 1;
+//   transform: translate(0%, 0%);
+//   // transition: opacity .5s ease-in;
+//   transition: transform .5s ease-in;
+// }
+
+// .example-leave.example-leave-active {
+//   transform: translate(100%, 0%);
+//   // opacity: 0;
+// }
+
 @media (min-width: 600px) {
-  main {
-    flex-flow: row;
-    section {
-      width: 50%;
+  .col-10 {
+    flex: 0 1 10%;
+  }
+  .col-20 {
+    flex: 0 1 20%;
+  }
+  .col-30 {
+    flex: 0 1 30%;
+  }
+  .col-40 {
+    flex: 0 1 40%;
+  }
+  .col-50 {
+    flex: 0 1 50%;
+  }
+  .col-100 {
+    flex: 0 1 100%;
+  }
+
+  .row {
+    flex-wrap: nowrap;
+  }
+
+  form {
+    .form-group {
+      flex-direction: row;
+      align-items: center;
       button {
-        width: 300px;
+        flex: 1 1 60%;
       }
+    }
+  }
+
+  .even-space {
+    &.sm {
+      order: 0;
+    }
+
+    &.lg {
+      order: 0;
     }
   }
 }

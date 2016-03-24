@@ -7,6 +7,7 @@ import { createNewPlayer, changePlayerForm } from './actions'
 class NewPlayerView extends Component {
   constructor(props){
     super(props)
+    this.onSubmit = this.onSubmit.bind(this)
     this.handleNameChange = this.handleNameChange.bind(this)
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
   }
@@ -23,27 +24,57 @@ class NewPlayerView extends Component {
     });
   }
 
+  onSubmit(e) {
+    e.preventDefault()
+    this.props.handleSubmit()
+  }
+
   render(){
-    const { playerForm, recordingPlayer, onSubmit } = this.props
+    const { playerForm, recordingPlayer, handleSubmit } = this.props
     const { name, description} = playerForm
     return (
-      <div className='newPlayer'>
-        <h2>New Player</h2>
-        {recordingPlayer &&
-          'Loading...'}
-        <label htmlFor='player_name'>Name</label>
-        <input 
-          id='player_name' 
-          value={name} 
-          onChange={this.handleNameChange} />
+      <main className='row'>
+        <section className='col-50'>
+          <h2>New Player</h2>
+          {recordingPlayer &&
+            'Loading...'}
 
-        <label htmlFor='player_name'>Description</label>
-        <textarea 
-          id='player_desc' 
-          value={description} 
-          onChange={this.handleDescriptionChange} />
-        <button onClick={onSubmit}>Create!</button>
-      </div>
+          <form onSubmit={this.onSubmit}>
+            <div className='form-group'>
+              <div className='even-space lg'>
+                <label htmlFor='player_name'>Name</label>
+                <input 
+                  id='player_name' 
+                  value={name} 
+                  type='text'
+                  placeholder='Name'
+                  onChange={this.handleNameChange} />
+              </div>
+            </div>
+
+            <div className='form-group'>
+              <div className='even-space lg'>
+                <label htmlFor='player_name'>Description</label>
+                <textarea 
+                  id='player_desc' 
+                  value={description} 
+                  placeholder='Description'
+                  onChange={this.handleDescriptionChange}
+                  rows='3' />
+              </div>
+            </div>
+
+            <div className='form-group'>
+              <div className='even-space sm'>
+                <Link to='/'>Cancel</Link>
+              </div>
+              <div className='even-space lg'>
+                <button type='submit'>Create!</button>
+              </div>
+            </div>
+          </form>
+        </section>
+      </main>
     )
   }
 } 
@@ -76,7 +107,7 @@ function mergeProps(stateProps, dispatchProps, ownProps){
     handleChange: (fieldObj) => {
       changePlayerForm(fieldObj)
     },
-    onSubmit: () => {
+    handleSubmit: () => {
       // TODO: client side error handling
       createNewPlayer(playerForm)
     }

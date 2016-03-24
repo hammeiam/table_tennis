@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect, bindActionCreators } from 'react-redux'
+import { Link } from 'react-router'
 import { selectMatchPlayer, createNewGame } from './actions'
 import Match from './Match'
 
@@ -13,13 +14,13 @@ class MatchContainerView extends Component {
 
   selectFirstPlayer(e){
     this.props.handlePlayerSelection({
-      firstPlayerId: e.target.value
+      firstPlayerId: parseInt(e.target.value)
     })
   }
 
   selectSecondPlayer(e){
     this.props.handlePlayerSelection({
-      secondPlayerId: e.target.value
+      secondPlayerId: parseInt(e.target.value)
     })
   }
 
@@ -31,11 +32,10 @@ class MatchContainerView extends Component {
     const { recordingGame, playersData, firstPlayerId, secondPlayerId, games } = this.props
 
     if(firstPlayerId !== -1 && secondPlayerId !== -1){
-      return <div>got them players</div>
-      // return <Match 
-      //         firstPlayerId={this.state.firstPlayerId} 
-      //         secondPlayerId={this.state.secondPlayerId} 
-      //         onSubmit={this.handleSubmit} />
+      return <Match 
+              firstPlayer={playersData[firstPlayerId]} 
+              secondPlayer={playersData[secondPlayerId]} 
+              onSubmit={this.handleSubmit} />
     } else {
       const selectOption = {
         id: -1,
@@ -48,37 +48,74 @@ class MatchContainerView extends Component {
       )
 
       return (
-        <div>
-          <h2>Choose Players</h2>
-          <div>
-            <select 
-              id='selectPlayer1'
-              value={firstPlayerId}
-              onChange={this.selectFirstPlayer}
-              >
-              {playerOptions.filter(player => {
-                if(firstPlayerId === -1){ return true }
-                return player.id !== secondPlayerId
-              }).map(player => {
-                return <option key={player.id} value={player.id}>{player.name}</option>
-              })}
-            </select>
-          </div>
-          <div>
-            <select 
-              id='selectPlayer1'
-              value={secondPlayerId}
-              onChange={this.selectSecondPlayer}
-              >
-              {playerOptions.filter(player => {
-                if(secondPlayerId === -1){ return true }
-                return player.id !== firstPlayerId
-              }).map(player => {
-                return <option key={player.id} value={player.id}>{player.name}</option>
-              })}
-            </select>
-          </div>
-        </div>
+        <main className='row'>
+          <section className='col-100'>
+            <h2>Choose Players</h2>
+            <div className='row'>
+              <div className='col-40'>
+                <div className='even-space lg'>
+                  <select 
+                    id='selectFirstPlayer'
+                    value={firstPlayerId}
+                    onChange={this.selectFirstPlayer}
+                    >
+                    {playerOptions.filter(player => {
+                      if(secondPlayerId === -1){ return true }
+                      return player.id !== secondPlayerId
+                    }).map((player,i) => {
+                      return <option 
+                        key={player.id} 
+                        className={i === 0 ? 'disabled' : ''} 
+                        value={player.id}>
+                          {player.name}
+                      </option>
+                    })}
+                  </select>
+                </div>
+              </div>
+
+              <div className='col-40'>
+                <div className='even-space lg'>
+                  <h2>vs.</h2>
+                </div>
+              </div>
+
+              <div className='col-40'>
+                <div className='even-space lg'>
+                  <select 
+                    id='selectSecondPlayer'
+                    value={secondPlayerId}
+                    onChange={this.selectSecondPlayer}
+                    >
+                    {playerOptions.filter(player => {
+                      if(firstPlayerId === -1){ return true }
+                      return player.id !== firstPlayerId
+                    }).map((player,i) => {
+                      return <option 
+                        key={player.id} 
+                        className={i === 0 ? 'disabled' : ''} 
+                        value={player.id}>
+                          {player.name}
+                      </option>
+                    })}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div className='row'>
+              <div className='even-space sm'>
+                <Link to='/'>Cancel</Link>
+              </div>
+              <div className='even-space sm'>
+                <Link to='/new_player'>Create Player</Link>
+              </div>
+              <div className='even-space lg'>
+                <button type='submit'>Continue</button>
+              </div>
+            </div>
+          </section>
+        </main>
       )
     }
   }
