@@ -42,6 +42,13 @@ button {
     background-color: darken(@theme-color, 10%)
   }
 
+  &:disabled {
+    cursor: auto;
+    color: grey;
+    background-color: lightgrey;
+    border: 2px solid lightgrey;
+  }
+
   &:nth-child(1){
     margin-top: 0;
   }
@@ -50,7 +57,7 @@ button {
 select {
   padding: 10px 5px;
   flex: 0 0 100%;
-  max-width: 400px;
+  max-width: 300px;
   font-size: 13px;
   font-weight: 800;
   cursor: pointer;
@@ -83,14 +90,18 @@ header {
   justify-content: center;
 
   &.sm {
-    flex: 1 1 1%;
+    flex: 1 1 100%;
     order: 1;
   }
 
   &.lg {
-    flex: 1 1 50%;
+    flex: 1 1 100%;
     order: -1;
   }
+}
+
+.spacer {
+  height: 0;
 }
 
 form {
@@ -145,9 +156,7 @@ form {
 .col-10, .col-20, .col-30, .col-40, .col-50, .col-100 {
   flex: 0 1 100%;
   display: flex;
-  flex-direction: column;
-  // align-items: center;
-
+  // align-items:
 }
 
 .row {
@@ -273,6 +282,10 @@ main {
     flex-wrap: nowrap;
   }
 
+  .spacer {
+    height: 300px;
+  }
+
   form {
     .form-group {
       flex-direction: row;
@@ -285,10 +298,12 @@ main {
 
   .even-space {
     &.sm {
+      flex: 1 1 1%;
       order: 0;
     }
 
     &.lg {
+      flex: 1 1 50%;
       order: 0;
     }
   }

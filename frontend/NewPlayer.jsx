@@ -64,12 +64,14 @@ class NewPlayerView extends Component {
               </div>
             </div>
 
+            <div className='spacer' />
+
             <div className='form-group'>
               <div className='even-space sm'>
                 <Link to='/'>Cancel</Link>
               </div>
               <div className='even-space lg'>
-                <button type='submit'>Create!</button>
+                <button type='submit' disabled={!name.length}>Create Player</button>
               </div>
             </div>
           </form>

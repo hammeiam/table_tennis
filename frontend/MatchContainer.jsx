@@ -30,8 +30,8 @@ class MatchContainerView extends Component {
 
   render(){
     const { recordingGame, playersData, firstPlayerId, secondPlayerId, games } = this.props
-
-    if(firstPlayerId !== -1 && secondPlayerId !== -1){
+    const bothPlayersChosen = firstPlayerId !== -1 && secondPlayerId !== -1
+    if(false){
       return <Match 
               firstPlayer={playersData[firstPlayerId]} 
               secondPlayer={playersData[secondPlayerId]} 
@@ -74,7 +74,7 @@ class MatchContainerView extends Component {
                 </div>
               </div>
 
-              <div className='col-40'>
+              <div className='col-20'>
                 <div className='even-space lg'>
                   <h2>vs.</h2>
                 </div>
@@ -103,6 +103,8 @@ class MatchContainerView extends Component {
               </div>
             </div>
 
+            <div className='spacer' />
+
             <div className='row'>
               <div className='even-space sm'>
                 <Link to='/'>Cancel</Link>
@@ -111,7 +113,7 @@ class MatchContainerView extends Component {
                 <Link to='/new_player'>Create Player</Link>
               </div>
               <div className='even-space lg'>
-                <button type='submit'>Continue</button>
+                <button disabled={!bothPlayersChosen} >Continue</button>
               </div>
             </div>
           </section>
