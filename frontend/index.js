@@ -1,6 +1,6 @@
 import 'babel-polyfill' // must be first thing
 import React, { Component } from 'react'
-import Routing from './Routing'
+import Routing from './components/Routing'
 import { render } from 'react-dom'
 import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'

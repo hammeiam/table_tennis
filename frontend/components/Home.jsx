@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import { Link, browserHistory } from 'react-router'
 import Leaderboard from './Leaderboard'
 
-// TODO: Link vs push for buttons
 const Home = () => {
   return (
     <main className='row'>

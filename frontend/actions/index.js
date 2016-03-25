@@ -81,6 +81,7 @@ export function createNewPlayer(player){
     .then(updatedPlayers => {
       dispatch(receiveUpdatedPlayers(updatedPlayers))
       dispatch(receiveNewPlayerConfirmation())
+      // TODO: review if this is kosher. redir to profile page. 
       dispatch(push('/'))
     })
   }

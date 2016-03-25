@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect, bindActionCreators } from 'react-redux'
 import { Link, browserHistory } from 'react-router'
-import { createNewPlayer, changePlayerForm } from './actions'
+import { createNewPlayer, changePlayerForm } from '../actions'
 
 // TODO: clear form on new route?
 class NewPlayerView extends Component {

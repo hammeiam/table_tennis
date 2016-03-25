@@ -5,8 +5,8 @@ import currentMatch from './currentMatch'
 
 // {
 //   players: {
-//     data: obj,
-//     sorted: arr,
+//     data: obj
+//     sorted: arr
 //     waitingOnServer: bool
 //   }
 
@@ -18,8 +18,8 @@ import currentMatch from './currentMatch'
 //   }
 
 //   playerForm: {
-//     name:
-//     description:
+//     name: str
+//     description: str
 //     waitingOnServer: bool
 //   }
 // }

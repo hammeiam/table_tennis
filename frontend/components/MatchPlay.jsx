@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect, bindActionCreators } from 'react-redux'
 import { Link, browserHistory } from 'react-router'
-import { selectMatchPlayer, createNewGame } from './actions'
+import { selectMatchPlayer, createNewGame } from '../actions'
 import Game from './Game'
 
 // const initialState = {
@@ -51,7 +51,7 @@ class MatchPlayView extends Component {
     // const players = query && query.players 
     // const [ firstPlayer, secondPlayer ] = players.map(id => playersData[id])
     const { 
-      recordingGame, 
+      waitingOnServer, 
       playersData, 
       firstPlayerId, 
       secondPlayerId,
@@ -64,7 +64,7 @@ class MatchPlayView extends Component {
       <div className='match'>
         <h2>{firstPlayer.name} vs. {secondPlayer.name}</h2>
         <div>
-          {this.state.games.map((game,i) => {
+          {games.map((game,i) => {
             return <Game {...game} i={i+1} key={i}/>
           })}
           
@@ -96,13 +96,13 @@ class MatchPlayView extends Component {
 // }
 
 function mapStateToProps(state){
-  const { rootReducer } = state
-  const { recordingGame, playersData, currentMatch } = rootReducer
-  const { firstPlayerId, secondPlayerId, games } = currentMatch
-  
+  const { appReducer } = state
+  const { players, currentMatch } = appReducer
+  const { firstPlayerId, secondPlayerId, games, waitingOnServer } = currentMatch
+  debugger
   return { 
-    recordingGame, 
-    playersData, 
+    waitingOnServer, 
+    playersData: players.data, 
     firstPlayerId, 
     secondPlayerId,
     games 
