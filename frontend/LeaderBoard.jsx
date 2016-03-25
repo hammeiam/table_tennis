@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
 
-const Leaderboard = ({playersData, sortedPlayers}) => {
+const LeaderboardView = ({playersData, sortedPlayers}) => {
   const headers = (
     <div className={'leaderboard-row header'}>
       <div className='cell'></div>
@@ -39,6 +40,23 @@ const Leaderboard = ({playersData, sortedPlayers}) => {
   )
 }
 
-Leaderboard.propTypes = {}
+LeaderboardView.propTypes = {
+  playersData: PropTypes.object,
+  sortedPlayers: PropTypes.arrayOf(PropTypes.number).isRequired
+}
+
+const mapStateToProps = (state) => {
+  const { appReducer } = state
+  const { players } = appReducer
+  return {
+    playersData: players.data,
+    sortedPlayers: players.sorted
+  }
+}
+
+const Leaderboard = connect(
+  mapStateToProps,
+  null
+)(LeaderboardView)
 
 export default Leaderboard

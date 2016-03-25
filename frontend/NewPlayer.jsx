@@ -25,6 +25,7 @@ class NewPlayerView extends Component {
   }
 
   onSubmit(e) {
+    // TODO: redirect to player page, not home page
     e.preventDefault()
     this.props.handleSubmit()
   }
@@ -85,8 +86,8 @@ NewPlayerView.propTypes = {
 }
 
 function mapStateToProps(state){
-  const { rootReducer } = state
-  const { recordingPlayer, playerForm } = rootReducer
+  const { appReducer } = state
+  const { recordingPlayer, playerForm } = appReducer
 
   return {
     recordingPlayer,

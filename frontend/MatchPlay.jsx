@@ -1,16 +1,18 @@
 import React, { Component, PropTypes } from 'react'
+import { connect, bindActionCreators } from 'react-redux'
+import { Link, browserHistory } from 'react-router'
+import { selectMatchPlayer, createNewGame } from './actions'
 import Game from './Game'
 
-const initialState = {
-  games: [],
-  firstPlayerWins: 0,
-  secondPlayerWins: 0
-}
+// const initialState = {
+//   games: [],
+//   firstPlayerWins: 0,
+//   secondPlayerWins: 0
+// }
 
-class Match extends Component {
+class MatchPlayView extends Component {
   constructor(props){
     super(props)
-    this.state = initialState
     this.handleGameWin = this.handleGameWin.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -44,7 +46,20 @@ class Match extends Component {
   }
 
   render(){
-    const { firstPlayer, secondPlayer } = this.props
+    // const { location } = this.props 
+    // const { query } = this.props.location
+    // const players = query && query.players 
+    // const [ firstPlayer, secondPlayer ] = players.map(id => playersData[id])
+    const { 
+      recordingGame, 
+      playersData, 
+      firstPlayerId, 
+      secondPlayerId,
+      games, 
+      onSubmit 
+    } = this.props 
+    const [firstPlayer, secondPlayer] = [firstPlayerId,secondPlayerId].map(id => playersData[id])
+    debugger
     return (
       <div className='match'>
         <h2>{firstPlayer.name} vs. {secondPlayer.name}</h2>
@@ -74,10 +89,39 @@ class Match extends Component {
   }
 }
 
-Match.propTypes = {
-  firstPlayer: PropTypes.object.isRequired,
-  secondPlayer: PropTypes.object.isRequired,
-  onSubmit: PropTypes.func.isRequired
+// MatchPlay.propTypes = {
+//   firstPlayer: PropTypes.object.isRequired,
+//   secondPlayer: PropTypes.object.isRequired,
+//   onSubmit: PropTypes.func.isRequired
+// }
+
+function mapStateToProps(state){
+  const { rootReducer } = state
+  const { recordingGame, playersData, currentMatch } = rootReducer
+  const { firstPlayerId, secondPlayerId, games } = currentMatch
+  
+  return { 
+    recordingGame, 
+    playersData, 
+    firstPlayerId, 
+    secondPlayerId,
+    games 
+  }
 }
 
-export default Match
+function mapDispatchToProps(dispatch) {
+  // return bindActionCreators(createNewGame, dispatch)
+  return {
+    onSubmit(){
+      dispatch(createNewGame())
+    }
+  }
+}
+
+
+const MatchPlay = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MatchPlayView)
+
+export default MatchPlay

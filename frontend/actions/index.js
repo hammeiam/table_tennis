@@ -87,17 +87,25 @@ export function createNewPlayer(player){
 }
 
 /*
-*   GAMES
+*   MATCHES
 */
 export const RESET_CURRENT_MATCH = 'RESET_CURRENT_MATCH'
+export const ADD_GAME_TO_MATCH = 'ADD_GAME_TO_MATCH'
 export const SELECT_MATCH_PLAYER = 'SELECT_MATCH_PLAYER'
-export const CREATE_GAME = 'CREATE_GAME'
-export const POST_NEW_GAME = 'POST_NEW_GAME'
-export const RECEIVE_NEW_GAME_CONFIRMATION = 'RECEIVE_NEW_GAME_CONFIRMATION'
+export const CREATE_MATCH = 'CREATE_MATCH'
+export const POST_NEW_MATCH = 'POST_NEW_MATCH'
+export const RECEIVE_NEW_MATCH_CONFIRMATION = 'RECEIVE_NEW_MATCH_CONFIRMATION'
 
 export function resetCurrentMatch(){
   return {
     type: RESET_CURRENT_MATCH
+  }
+}
+
+export function addGameToMatch(game) {
+  return {
+    type: ADD_GAME_TO_MATCH,
+    game
   }
 }
 
@@ -108,23 +116,23 @@ export function selectMatchPlayer(playerObj){
   }
 }
 
-export function postNewGame(game){
+export function postNewMatch(){
   return {
-    type: POST_NEW_GAME,
-    game
+    type: POST_NEW_MATCH
   }
 }
 
-export function receiveNewGameConfirmation(){
+export function receiveNewMatchConfirmation(){
   return {
-    type: RECEIVE_NEW_GAME_CONFIRMATION
+    type: RECEIVE_NEW_MATCH_CONFIRMATION
   }
 }
 
-export function createNewGame(game){
+export function createNewMatch(match){
   // {winner_id: 1, loser_id: 2}
+  // TODO: change game to match on the backend
   return function(dispatch){
-    dispatch(postNewGame(game))
+    dispatch(postNewMatch())
 
     return fetch('/api/games', {
       method: 'post',
@@ -132,13 +140,13 @@ export function createNewGame(game){
         'Content-Type': 'application/json'
       }),
       body: JSON.stringify({
-        game
+        game: match
       })
     })
     .then(resp => resp.json())
     .then(updatedPlayers => {
       dispatch(receiveUpdatedPlayers(updatedPlayers))
-      dispatch(receiveNewGameConfirmation())
+      dispatch(receiveNewMatchConfirmation())
     })
   }
 }

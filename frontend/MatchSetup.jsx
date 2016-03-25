@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import { connect, bindActionCreators } from 'react-redux'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 import { selectMatchPlayer, createNewGame } from './actions'
-import Match from './Match'
+// import Match from './Match'
 
-class MatchContainerView extends Component {
+class MatchSetupView extends Component {
   constructor(props){
     super(props)
     this.selectFirstPlayer = this.selectFirstPlayer.bind(this)
@@ -32,10 +32,10 @@ class MatchContainerView extends Component {
     const { recordingGame, playersData, firstPlayerId, secondPlayerId, games } = this.props
     const bothPlayersChosen = firstPlayerId !== -1 && secondPlayerId !== -1
     if(false){
-      return <Match 
-              firstPlayer={playersData[firstPlayerId]} 
-              secondPlayer={playersData[secondPlayerId]} 
-              onSubmit={this.handleSubmit} />
+      // return <Match 
+      //         firstPlayer={playersData[firstPlayerId]} 
+      //         secondPlayer={playersData[secondPlayerId]} 
+      //         onSubmit={this.handleSubmit} />
     } else {
       const selectOption = {
         id: -1,
@@ -110,10 +110,19 @@ class MatchContainerView extends Component {
                 <Link to='/'>Cancel</Link>
               </div>
               <div className='even-space sm'>
-                <Link to='/new_player'>Create Player</Link>
+                <Link to='/players/new'>Create Player</Link>
               </div>
               <div className='even-space lg'>
-                <button disabled={!bothPlayersChosen} >Continue</button>
+                <button 
+                  disabled={!bothPlayersChosen} 
+                  onClick={() => browserHistory.push({
+                    pathname: '/match/play',
+                    query: {
+                      players: [firstPlayerId, secondPlayerId]
+                    }
+                  })}>
+                  Continue
+                </button>
               </div>
             </div>
           </section>
@@ -123,7 +132,7 @@ class MatchContainerView extends Component {
   }
 }
 
-MatchContainerView.propTypes = {
+MatchSetupView.propTypes = {
   recordingGame: PropTypes.bool, 
   playersData: PropTypes.object.isRequired, 
   // firstPlayerId: PropTypes.string, 
@@ -132,8 +141,8 @@ MatchContainerView.propTypes = {
 }
 
 function mapStateToProps(state){
-  const { rootReducer } = state
-  const { recordingGame, playersData, currentMatch } = rootReducer
+  const { appReducer } = state
+  const { recordingGame, playersData, currentMatch } = appReducer
   const { firstPlayerId, secondPlayerId, games } = currentMatch
   
   return { 
@@ -166,10 +175,10 @@ function mergeProps(stateProps, dispatchProps, ownProps){
   }
 }
 
-const MatchContainer = connect(
+const MatchSetup = connect(
   mapStateToProps,
   { selectMatchPlayer, createNewGame },
   mergeProps
-)(MatchContainerView)
+)(MatchSetupView)
 
-export default MatchContainer
+export default MatchSetup

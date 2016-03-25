@@ -55,7 +55,7 @@ button {
 }
 
 select {
-  padding: 10px 5px;
+  padding: 3px 5px;
   flex: 0 0 100%;
   max-width: 300px;
   font-size: 13px;
@@ -81,6 +81,7 @@ header {
     font-size: 36px;
     color: @theme-color;
     font-family: Tahoma, Geneva, sans-serif;
+    cursor: pointer;
   }
 }
 
@@ -101,7 +102,7 @@ header {
 }
 
 .spacer {
-  height: 0;
+  height: 30px;
 }
 
 form {
@@ -226,6 +227,9 @@ main {
 
           a {
             text-decoration: none;
+            &:hover {
+              text-decoration: underline;
+            }
           }
         }
       }

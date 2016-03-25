@@ -1,13 +1,13 @@
 import thunkMiddleware from 'redux-thunk'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import { browserHistory } from 'react-router'
-import rootReducer from './reducers'
+import appReducer from './reducers'
 import { routerReducer,routerMiddleware, push } from 'react-router-redux'
 
 const routingMiddleware = routerMiddleware(browserHistory)
 
 const reducer = combineReducers({
-  rootReducer, 
+  appReducer, 
   routing: routerReducer
 })
 

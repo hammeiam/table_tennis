@@ -4,20 +4,15 @@ import './app.less'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 
-// const App = ({ children }) => {
-class App extends Component{
-  constructor(props){super(props)}
-  render(){
-    const { children } = this.props
+const App = ({ children }) => {
   return (
     <div className='container'>
       <header>
-        <h1>elo governor</h1>
+        <h1 onClick={() => browserHistory.push('/')}>elo governor</h1>
       </header>
       {children}
     </div>
   )
-}
 }
 
 App.propTypes = {
