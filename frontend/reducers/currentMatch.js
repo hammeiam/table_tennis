@@ -1,4 +1,4 @@
-import { 
+import {
   RESET_CURRENT_MATCH,
   ADD_GAME_TO_MATCH,
   SELECT_MATCH_PLAYER,
@@ -6,13 +6,21 @@ import {
   RECEIVE_NEW_MATCH_CONFIRMATION
 } from '../actions'
 
-const initialCurrentMatchState = {
+// const initialCurrentMatchState = {
+//   firstPlayerId: -1,
+//   secondPlayerId: -1,
+//   games: [],
+//   waitingOnServer: false
+// }
+
+const initialCurrentMatchState =  {
   firstPlayerId: -1,
+  firstPlayerScore: 0,
   secondPlayerId: -1,
-  games: [],
+  secondPlayerScore: 0,
+  gameNumber: 1,
   waitingOnServer: false
 }
-
 
 export default function currentMatch(state = initialCurrentMatchState, action){
   switch(action.type){
@@ -24,6 +32,7 @@ export default function currentMatch(state = initialCurrentMatchState, action){
       // TODO: this
 
     case SELECT_MATCH_PLAYER:
+      // payload: { firstPlayerId: 3 }
       return Object.assign({}, state, action.payload)
 
     case POST_NEW_MATCH:

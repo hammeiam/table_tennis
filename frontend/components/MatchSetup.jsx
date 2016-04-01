@@ -6,10 +6,10 @@ import { selectMatchPlayer } from '../actions'
 // TODO: better way to do select default option & DRY
 // TODO: wrap in form, make default id '', make default option required
 const MatchSetupView = (props) => {
-  const { 
-    waitingOnServer, 
-    playersData, 
-    firstPlayerId, 
+  const {
+    waitingOnServer,
+    playersData,
+    firstPlayerId,
     secondPlayerId,
     games,
     selectPlayer
@@ -26,13 +26,13 @@ const MatchSetupView = (props) => {
   )
 
   return (
-    <main className='row'>
+    <main className='row match-setup'>
       <section className='col-100'>
         <h2>Choose Players</h2>
         <div className='row'>
           <div className='col-40'>
             <div className='even-space lg'>
-              <select 
+              <select
                 id='selectFirstPlayer'
                 value={firstPlayerId}
                 onChange={(e) => selectPlayer('firstPlayerId', e)}
@@ -41,9 +41,9 @@ const MatchSetupView = (props) => {
                   if(secondPlayerId === -1){ return true }
                   return player.id !== secondPlayerId
                 }).map((player,i) => {
-                  return <option 
-                    key={player.id} 
-                    className={i === 0 ? 'disabled' : ''} 
+                  return <option
+                    key={player.id}
+                    disabled={i === 0}
                     value={player.id}>
                       {player.name}
                   </option>
@@ -60,7 +60,7 @@ const MatchSetupView = (props) => {
 
           <div className='col-40'>
             <div className='even-space lg'>
-              <select 
+              <select
                 id='selectSecondPlayer'
                 value={secondPlayerId}
                 onChange={(e) => selectPlayer('secondPlayerId', e)}
@@ -69,9 +69,9 @@ const MatchSetupView = (props) => {
                   if(firstPlayerId === -1){ return true }
                   return player.id !== firstPlayerId
                 }).map((player,i) => {
-                  return <option 
-                    key={player.id} 
-                    className={i === 0 ? 'disabled' : ''} 
+                  return <option
+                    key={player.id}
+                    disabled={i === 0}
                     value={player.id}>
                       {player.name}
                   </option>
@@ -91,8 +91,8 @@ const MatchSetupView = (props) => {
             <Link to='/players/new'>Create Player</Link>
           </div>
           <div className='even-space lg'>
-            <button 
-              disabled={!bothPlayersChosen} 
+            <button
+              disabled={!bothPlayersChosen}
               onClick={() => browserHistory.push('/match/play')}>
               Continue
             </button>
@@ -105,9 +105,9 @@ const MatchSetupView = (props) => {
 
 
 MatchSetupView.propTypes = {
-  waitingOnServer: PropTypes.bool, 
-  playersData: PropTypes.object.isRequired, 
-  firstPlayerId: PropTypes.number, 
+  waitingOnServer: PropTypes.bool,
+  playersData: PropTypes.object.isRequired,
+  firstPlayerId: PropTypes.number,
   secondPlayerId: PropTypes.number,
   games: PropTypes.array,
   selectPlayer: PropTypes.func.isRequired
@@ -117,13 +117,13 @@ function mapStateToProps(state){
   const { appReducer } = state
   const { players, currentMatch } = appReducer
   const { firstPlayerId, secondPlayerId, games, waitingOnServer } = currentMatch
-  
-  return { 
-    waitingOnServer, 
-    playersData: players.data, 
-    firstPlayerId, 
+
+  return {
+    waitingOnServer,
+    playersData: players.data,
+    firstPlayerId,
     secondPlayerId,
-    games 
+    games
   }
 }
 

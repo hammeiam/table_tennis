@@ -1,3 +1,4 @@
+// TODO: require polyfill for fetch
 // TODO: handle errors
 import { push } from 'react-router-redux'
 
@@ -81,7 +82,7 @@ export function createNewPlayer(player){
     .then(updatedPlayers => {
       dispatch(receiveUpdatedPlayers(updatedPlayers))
       dispatch(receiveNewPlayerConfirmation())
-      // TODO: review if this is kosher. redir to profile page. 
+      // TODO: review if this is kosher. redir to profile page.
       dispatch(push('/'))
     })
   }

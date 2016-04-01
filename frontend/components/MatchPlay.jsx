@@ -46,45 +46,62 @@ class MatchPlayView extends Component {
   }
 
   render(){
-    // const { location } = this.props 
+    // const { location } = this.props
     // const { query } = this.props.location
-    // const players = query && query.players 
+    // const players = query && query.players
     // const [ firstPlayer, secondPlayer ] = players.map(id => playersData[id])
-    const { 
-      waitingOnServer, 
-      playersData, 
-      firstPlayerId, 
+    const {
+      waitingOnServer,
+      playersData,
+      firstPlayerId,
       secondPlayerId,
-      games, 
-      onSubmit 
-    } = this.props 
+      games,
+      onSubmit
+    } = this.props
     const [firstPlayer, secondPlayer] = [firstPlayerId,secondPlayerId].map(id => playersData[id])
-    debugger
+    // debugger
     return (
-      <div className='match'>
-        <h2>{firstPlayer.name} vs. {secondPlayer.name}</h2>
-        <div>
-          {games.map((game,i) => {
-            return <Game {...game} i={i+1} key={i}/>
-          })}
-          
+      <main className='row match-play'>
+        <section className='col-60'>
           <div className='row'>
-            <div className='cell'>Who won?</div>
-            <div className='cell'>
+            <div className='row'>
+              <div>
+                <div className='match-score'>8</div>
+                <h2>{firstPlayer.name}</h2>
+              </div>
+            </div>
+            <div className='row'>
+              <h2>vs.</h2>
+            </div>
+            <div className='row'>
+              <div>
+                <div className='match-score'>8</div>
+                <h2>{secondPlayer.name}</h2>
+              </div>
+            </div>
+          </div>
+
+          <div className='row'>
+            <div className='row'>
               <button onClick={() => this.handleGameWin(firstPlayer.id, secondPlayer.id)}>
-                {firstPlayer.name}
+                Won?
               </button>
             </div>
-            <div className='cell'>
+            <div className='row'>
+              <h2>Game 7</h2>
+            </div>
+            <div className='row'>
               <button onClick={() => this.handleGameWin(secondPlayer.id, firstPlayer.id)}>
-                {secondPlayer.name}
+                Won?
               </button>
             </div>
           </div>
-        </div>
-
-        <button onClick={this.handleSubmit}>End Match</button>
-      </div>
+          <div className='spacer' />
+          <div className='row'>
+            <button onClick={this.handleSubmit}>End Match</button>
+          </div>
+        </section>
+      </main>
     )
   }
 }
@@ -99,13 +116,13 @@ function mapStateToProps(state){
   const { appReducer } = state
   const { players, currentMatch } = appReducer
   const { firstPlayerId, secondPlayerId, games, waitingOnServer } = currentMatch
-  debugger
-  return { 
-    waitingOnServer, 
-    playersData: players.data, 
-    firstPlayerId, 
+  // debugger
+  return {
+    waitingOnServer,
+    playersData: players.data,
+    firstPlayerId,
     secondPlayerId,
-    games 
+    games
   }
 }
 
