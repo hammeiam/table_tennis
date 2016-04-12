@@ -92,7 +92,7 @@ export function createNewPlayer(player){
 *   MATCHES
 */
 export const RESET_CURRENT_MATCH = 'RESET_CURRENT_MATCH'
-export const ADD_GAME_TO_MATCH = 'ADD_GAME_TO_MATCH'
+export const RECORD_PLAYER_SCORE = 'RECORD_PLAYER_SCORE'
 export const SELECT_MATCH_PLAYER = 'SELECT_MATCH_PLAYER'
 export const CREATE_MATCH = 'CREATE_MATCH'
 export const POST_NEW_MATCH = 'POST_NEW_MATCH'
@@ -104,10 +104,10 @@ export function resetCurrentMatch(){
   }
 }
 
-export function addGameToMatch(game) {
+export function recordPlayerScore(whichPlayer) {
   return {
-    type: ADD_GAME_TO_MATCH,
-    game
+    type: RECORD_PLAYER_SCORE,
+    whichPlayer
   }
 }
 
@@ -130,9 +130,13 @@ export function receiveNewMatchConfirmation(){
   }
 }
 
-export function createNewMatch(match){
+export function createNewMatch(winnerId, loserId){
   // {winner_id: 1, loser_id: 2}
   // TODO: change game to match on the backend
+  const match = {
+    winner_id: winnerId,
+    loser_id: loserId
+  }
   return function(dispatch){
     dispatch(postNewMatch())
 
@@ -147,6 +151,7 @@ export function createNewMatch(match){
     })
     .then(resp => resp.json())
     .then(updatedPlayers => {
+      dispatch(push('/'))
       dispatch(receiveUpdatedPlayers(updatedPlayers))
       dispatch(receiveNewMatchConfirmation())
     })

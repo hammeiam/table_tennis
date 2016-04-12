@@ -1,7 +1,1 @@
-json.(player, :id, :name, :description, :rating)
-json.won_games player.won_games do |game|
-  json.(game, :id, :winner_id, :loser_id)
-end
-json.lost_games player.lost_games do |game|
-  json.(game, :id, :winner_id, :loser_id)
-end
+json.(player, :id, :name, :description, :rating, :player_record, :won_games, :lost_games)

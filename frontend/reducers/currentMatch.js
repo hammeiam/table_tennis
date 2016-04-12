@@ -1,17 +1,10 @@
 import {
   RESET_CURRENT_MATCH,
-  ADD_GAME_TO_MATCH,
+  RECORD_PLAYER_SCORE,
   SELECT_MATCH_PLAYER,
   POST_NEW_MATCH,
   RECEIVE_NEW_MATCH_CONFIRMATION
 } from '../actions'
-
-// const initialCurrentMatchState = {
-//   firstPlayerId: -1,
-//   secondPlayerId: -1,
-//   games: [],
-//   waitingOnServer: false
-// }
 
 const initialCurrentMatchState =  {
   firstPlayerId: -1,
@@ -28,8 +21,12 @@ export default function currentMatch(state = initialCurrentMatchState, action){
     case RESET_CURRENT_MATCH:
       return initialCurrentMatchState
 
-    case ADD_GAME_TO_MATCH:
-      // TODO: this
+    case RECORD_PLAYER_SCORE:
+      const oldScore = state[action.whichPlayer + 'Score']
+      return Object.assign({}, state, {
+        [action.whichPlayer + 'Score']: oldScore + 1,
+        gameNumber: state.gameNumber + 1
+       })
 
     case SELECT_MATCH_PLAYER:
       // payload: { firstPlayerId: 3 }

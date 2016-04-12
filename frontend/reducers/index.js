@@ -11,9 +11,11 @@ import currentMatch from './currentMatch'
 //   }
 
 //   currentMatch: {
-//     player1: num
-//     player2: num
-//     games: arr
+//     firstPlyerId: num,
+//     firstPlyerScore: num,
+//     secondPlyerId: num,
+//     secondPlyerScore: num,
+//     gameNumber: num
 //     waitingOnServer: bool
 //   }
 
