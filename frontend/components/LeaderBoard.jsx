@@ -31,7 +31,7 @@ const LeaderboardView = ({playersData, sortedPlayers}) => {
   return (
     <div className='leaderboard'>
       <h2>Leaderboard</h2>
-      
+
       <div className='leaderboard-table'>
         {headers}
         {rows}
